@@ -479,3 +479,51 @@ var MyScroll = "";
   };
   Init.i();
 })(window, document, jQuery);
+
+
+var swiper = new Swiper(&quot;.mySwiper&quot;, {
+  pagination: {
+    el: &quot;.swiper-pagination&quot;,
+    dynamicBullets: true,
+ observer:true,
+observeParents:true,
+resizeObserver:false
+  },
+
+effect: &#39;fade&#39;,
+fadeEffect: {
+crossFade: true // This makes the outgoing slide transparent while the new one fades in
+},
+
+// 2. Autoplay settings (No repeat)
+loop: true, 
+autoplay: {
+delay: 5000,
+stopOnLastSlide: true,
+disableOnInteraction: false,
+},
+
+// Optional: Add smooth transition speed
+speed: 6000, // 1 second duration for the fade
+});
+
+
+var swiper1 = new Swiper(&quot;.mySwiper1&quot;, {
+  direction: &quot;vertical&quot;,
+loop: true,   
+autoplay: {
+delay: 3000,
+// 2. This stops autoplay when it reaches the last slide
+stopOnLastSlide: true,
+// 3. Keeps autoplay running even if you click a button
+disableOnInteraction: false, 
+},
+  pagination: {
+    el: &quot;.swiper-pagination&quot;,
+    clickable: true,
+  },
+});
+
+
+
+
