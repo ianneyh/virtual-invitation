@@ -1,0 +1,46 @@
+/*
+* Template Name : Brizzle | Responsive Bootstrap Landing Page Template
+* Version : 1.0.0
+* Created by : Themesdesign
+* File : Pink Color
+*/
+
+.text-custom,
+.navbar-custom .navbar-nav li a:hover,
+.navbar-custom .navbar-nav li a:active,
+.navbar-custom .navbar-nav li.active a,
+.team-social li a:hover ,
+.social .social-icon:hover{
+    color: #f783b3 !important;
+}
+.play-video-btn,
+.bg-custom,
+.btn-custom,.social-icon > li a:hover,.back-to-top:hover {
+    background-color: #f783b3;
+}
+
+.btn-custom, .home-registration-form .form-control:focus,
+.custom-form .form-control:focus,
+.social .social-icon:hover,
+.registration-input-box:focus {
+    border-color: #f783b3;
+}
+
+.price-box-active {
+     border:2px solid #f783b3;
+}
+
+.btn-custom:hover,
+.btn-custom:focus,
+.btn-custom:active,
+.btn-custom.active,
+.btn-custom.focus,
+.btn-custom:active,
+.btn-custom:focus,
+.btn-custom:hover,
+.open > .dropdown-toggle.btn-custom {
+  border-color: #f783b3;
+  background-color: #f783b3;
+  outline: none;
+  box-shadow: 0 20px 38px rgba(0, 0, 0, 0.16);
+}

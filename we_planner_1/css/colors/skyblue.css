@@ -1,0 +1,47 @@
+/*
+* Template Name : Brizzle | Responsive Bootstrap Landing Page Template
+* Version : 1.0.0
+* Created by : Themesdesign
+* File : Template Skyblue color
+*/
+
+
+.text-custom,
+.navbar-custom .navbar-nav li a:hover,
+.navbar-custom .navbar-nav li a:active,
+.navbar-custom .navbar-nav li.active a,
+.team-social li a:hover ,
+.social .social-icon:hover{
+    color: #31a4ff !important;
+}
+.play-video-btn,
+.bg-custom,
+.btn-custom,.social-icon > li a:hover,.back-to-top:hover {
+    background-color: #31a4ff;
+}
+
+.btn-custom, .home-registration-form .form-control:focus,
+.custom-form .form-control:focus,
+.social .social-icon:hover,
+.registration-input-box:focus {
+    border-color: #31a4ff;
+}
+
+.price-box-active {
+     border:2px solid #31a4ff;
+}
+
+.btn-custom:hover,
+.btn-custom:focus,
+.btn-custom:active,
+.btn-custom.active,
+.btn-custom.focus,
+.btn-custom:active,
+.btn-custom:focus,
+.btn-custom:hover,
+.open > .dropdown-toggle.btn-custom {
+  border-color: #31a4ff;
+  background-color: #31a4ff;
+  outline: none;
+  box-shadow: 0 20px 38px rgba(0, 0, 0, 0.16);
+}
