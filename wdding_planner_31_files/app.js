@@ -478,10 +478,8 @@ var MyScroll = "";
     },
   };
   Init.i();
-})(window, document, jQuery);
 
-
-var swiper = new Swiper(&quot;.mySwiper&quot;, {
+  var swiper = new Swiper(&quot;.mySwiper&quot;, {
   pagination: {
     el: &quot;.swiper-pagination&quot;,
     dynamicBullets: true,
@@ -523,6 +521,13 @@ disableOnInteraction: false,
     clickable: true,
   },
 });
+
+  
+})(window, document, jQuery);
+
+
+
+
 
 
 
