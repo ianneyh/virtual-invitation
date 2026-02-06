@@ -56,10 +56,19 @@ document.querySelectorAll('[data-video]').forEach(e=>{
 });
 
   /* multiple social */
-document.querySelectorAll('[data-social]').forEach(e=>{
- try{e.href=get(e.dataset.social)}catch{}
+//document.querySelectorAll('[data-social]').forEach(e=>{
+ //try{e.href=get(e.dataset.social)}catch{}
 
-});
+//});
+
+ document.querySelectorAll('[data-social]').forEach(e=>{
+ try{
+   const v=get(e.dataset.social);
+   if(v) e.href=v;
+   else console.log('SOCIAL EMPTY:',e.dataset.social);
+ }catch(err){
+   console.log('SOCIAL ERROR:',e.dataset.social);
+ }
 
 
 
