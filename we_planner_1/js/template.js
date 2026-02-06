@@ -60,10 +60,5 @@ document.querySelectorAll('[data-social]').forEach(e=>{
  try{e.href=get(e.dataset.social)}catch{}
 });
 
- document.querySelectorAll("[data-json-attr]").forEach(e=>{
-  const [attr,path] = e.dataset.jsonAttr.split(":");
-  e.setAttribute(attr, get(path));
-});
- 
 
 })();
