@@ -2,7 +2,7 @@
 
 const slug=location.pathname.replace(/\//g,'');
 
- alert(slug + ' ada');
+ alert(slug + ' a');
 const r=await fetch(`/feeds/posts/default/-/${slug}?alt=json`);
 const j=await r.json();
 if(!j.feed.entry)return;
