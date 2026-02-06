@@ -518,7 +518,7 @@ a {
 **********************/
 
 .bg-cta {
-   
+   background: url('../images/bg-cta.jpg');
     background-attachment: fixed;
     background-size: cover;
     background-position: center center;
@@ -970,4 +970,5 @@ ul.pattern .color9 {
     }
 
 }
+
 
