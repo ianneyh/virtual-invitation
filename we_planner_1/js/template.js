@@ -36,10 +36,10 @@ document.querySelectorAll('[data-btn]').forEach(e=>{
  e.href=d.link;
 });
 
-
-
-
-
+/* multiple social */
+document.querySelectorAll('[data-social]').forEach(e=>{
+ try{e.href=get(e.dataset.social)}catch{}
+});
  
 /* menu */
 document.querySelector('[data-menu]').innerHTML=
@@ -47,11 +47,6 @@ data.menu.map(m=>`
 <li class="nav-item">
 <a class="nav-link" href="${m.link}">${m.text}</a>
 </li>`).join('');
-
-/* multiple social */
-document.querySelectorAll('[data-social]').forEach(e=>{
- try{e.href=get(e.dataset.social)}catch{}
-});
 
  /* multiple background */
 document.querySelectorAll('[data-bg]').forEach(e=>{
