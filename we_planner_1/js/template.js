@@ -43,7 +43,7 @@ data.menu.map(m=>`
 <a class="nav-link" href="${m.link}">${m.text}</a>
 </li>`).join('');
 
-   /* multiple social */
+/* multiple social */
 document.querySelectorAll('[data-social]').forEach(e=>{
  try{e.href=get(e.dataset.social)}catch{}
 });
