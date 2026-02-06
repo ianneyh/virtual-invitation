@@ -43,4 +43,11 @@ data.menu.map(m=>`
 <a class="nav-link" href="${m.link}">${m.text}</a>
 </li>`).join('');
 
+ /* multiple background */
+document.querySelectorAll('[data-bg]').forEach(e=>{
+ try{
+   e.style.backgroundImage=`url(${get(e.dataset.bg)})`;
+ }catch{}
+});
+
 })();
