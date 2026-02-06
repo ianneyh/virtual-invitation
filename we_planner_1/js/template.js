@@ -42,11 +42,13 @@ document.querySelectorAll('[data-social]').forEach(e=>{
 });
  
 /* menu */
-document.querySelector('[data-menu]').innerHTML=
-data.menu.map(m=>`
+const menu=document.querySelector('[data-menu]');
+if(menu){
+ menu.innerHTML=data.menu.map(m=>`
 <li class="nav-item">
 <a class="nav-link" href="${m.link}">${m.text}</a>
 </li>`).join('');
+}
 
  /* multiple background */
 document.querySelectorAll('[data-bg]').forEach(e=>{
