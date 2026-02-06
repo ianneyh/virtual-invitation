@@ -50,4 +50,14 @@ document.querySelectorAll('[data-bg]').forEach(e=>{
  }catch{}
 });
 
+  /* multiple video */
+document.querySelectorAll('[data-video]').forEach(e=>{
+ try{e.href=data.moreFeatures.video}catch{}
+});
+
+  /* multiple social */
+document.querySelectorAll('[data-social]').forEach(e=>{
+ try{e.href=get(e.dataset.social)}catch{}
+});
+
 })();
