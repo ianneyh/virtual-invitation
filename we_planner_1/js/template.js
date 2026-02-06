@@ -36,6 +36,11 @@ document.querySelectorAll('[data-btn]').forEach(e=>{
  e.href=d.link;
 });
 
+
+
+
+
+ 
 /* menu */
 document.querySelector('[data-menu]').innerHTML=
 data.menu.map(m=>`
