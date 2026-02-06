@@ -29,6 +29,18 @@ document.querySelectorAll('[data-icon]').forEach(e=>{
  e.className=get(e.dataset.icon);
 });
 
+/* buttons */
+document.querySelectorAll('[data-btn]').forEach(e=>{
+ let d=get(e.dataset.btn);
+ e.innerHTML=d.text;
+ e.href=d.link;
+});
 
+/* menu */
+document.querySelector('[data-menu]').innerHTML=
+data.menu.map(m=>`
+<li class="nav-item">
+<a class="nav-link" href="${m.link}">${m.text}</a>
+</li>`).join('');
 
 })();
