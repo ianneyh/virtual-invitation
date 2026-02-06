@@ -1,10 +1,11 @@
-document.addEventListener("DOMContentLoaded",()=>{
+(async()=>{
 
 const slug=location.pathname.replace(/\//g,'');
-alert(slug);
-fetch(`/feeds/posts/default/-/${slug}?alt=json`)
-.then(r=>r.json())
-.then(j=>{
+
+ alert(slug + ' ada');
+const r=await fetch(`/feeds/posts/default/-/${slug}?alt=json`);
+const j=await r.json();
+if(!j.feed.entry)return;
 
 const html=j.feed.entry[0].content.$t;
 const data=JSON.parse(
@@ -23,10 +24,11 @@ document.querySelectorAll('[data-img]').forEach(e=>{
  e.src=get(e.dataset.img);
 });
 
-/* whatsapp */
-document.querySelectorAll('[data-wa]').forEach(e=>{
- e.href=`https://wa.me/${data.wa}`;
+/* icon */
+document.querySelectorAll('[data-icon]').forEach(e=>{
+ e.className=get(e.dataset.icon);
 });
 
-});
-});
+
+
+})();
