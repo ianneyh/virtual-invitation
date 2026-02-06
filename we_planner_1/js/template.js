@@ -58,7 +58,7 @@ document.querySelectorAll('[data-video]').forEach(e=>{
   /* multiple social */
 document.querySelectorAll('[data-social]').forEach(e=>{
  try{e.href=get(e.dataset.social)}catch{}
- alert(e.dataset.social);
+
 });
 
 
