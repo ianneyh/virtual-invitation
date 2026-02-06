@@ -110,4 +110,8 @@
 
     init();
 
+
+   alert('aaaaa');
+
+
 })(jQuery)
