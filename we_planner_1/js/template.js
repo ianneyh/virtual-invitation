@@ -43,6 +43,11 @@ data.menu.map(m=>`
 <a class="nav-link" href="${m.link}">${m.text}</a>
 </li>`).join('');
 
+   /* multiple social */
+document.querySelectorAll('[data-social]').forEach(e=>{
+ try{e.href=get(e.dataset.social)}catch{}
+});
+
  /* multiple background */
 document.querySelectorAll('[data-bg]').forEach(e=>{
  try{
@@ -55,20 +60,9 @@ document.querySelectorAll('[data-video]').forEach(e=>{
  try{e.href=data.moreFeatures.video}catch{}
 });
 
-  /* multiple social */
-//document.querySelectorAll('[data-social]').forEach(e=>{
- //try{e.href=get(e.dataset.social)}catch{}
 
-//});
 
- document.querySelectorAll('[data-social]').forEach(e=>{
- try{
-   const v=get(e.dataset.social);
-   if(v) e.href=v;
-   else console.log('SOCIAL EMPTY:',e.dataset.social);
- }catch(err){
-   console.log('SOCIAL ERROR:',e.dataset.social);
- }
+
 
 
 
