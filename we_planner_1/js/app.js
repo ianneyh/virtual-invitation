@@ -111,7 +111,8 @@
     init();
 
 
-   alert('aaaaa');
+
 
 
 })(jQuery)
+
