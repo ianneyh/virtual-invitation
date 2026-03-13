@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", function(){
 
 async function loadCategory(category){
 
-const url = `/feeds/posts/default/-/${category}?alt=json&max-results=10`;
+const url = `/feeds/posts/default/-/${category}?alt=json&max-results=1`;
 
 try{
 
