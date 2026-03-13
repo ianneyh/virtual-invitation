@@ -1,5 +1,3 @@
-<script>
-
 async function loadProducts(category, panelId){
 
 const url = "/feeds/posts/default?alt=json&max-results=20";
@@ -114,4 +112,3 @@ loadProducts(category,panel);
 
 });
 
-</script>
