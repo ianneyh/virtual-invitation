@@ -1,9 +1,12 @@
+document.addEventListener("DOMContentLoaded", function(){
+
 async function loadProducts(category){
 
-const feed = await fetch('/feeds/posts/default?alt=json');
+const feed = await fetch('/feeds/posts/default?alt=json&max-results=50');
 const data = await feed.json();
 
 const container = document.getElementById('product-list');
+
 container.innerHTML='';
 
 data.feed.entry.forEach(post=>{
@@ -12,6 +15,7 @@ const parser = new DOMParser();
 const html = parser.parseFromString(post.content.$t,'text/html');
 
 const json = html.querySelector('.product-json');
+
 if(!json) return;
 
 const product = JSON.parse(json.textContent);
@@ -19,15 +23,10 @@ const product = JSON.parse(json.textContent);
 if(product.category !== category) return;
 
 container.innerHTML += `
+
 <li class="item animate animate_top" style="--i:1">
 
 <div class="service_item overflow-hidden relative rounded-lg bg-white shadow-md duration-300 hover:shadow-xl">
-
-<button class="add_wishlist_btn">
-<span class="ph ph-heart text-xl"></span>
-<span class="ph-fill ph-heart text-xl"></span>
-<span class="blind">button add to wishlist</span>
-</button>
 
 <a class="service_thumb" href="${product.demo}">
 <img alt="${product.title}" class="w-full" src="${product.image}">
@@ -72,24 +71,39 @@ ${product.author}
 </div>
 
 </div>
+
 </div>
 </div>
 
 </li>
+
 `;
 
 });
 
+document.querySelector('.tab_list').setAttribute('aria-hidden','false');
+
 }
+
 
 document.querySelectorAll('.tab_btn').forEach(btn=>{
 
 btn.onclick = ()=>{
-document.querySelectorAll('.tab_btn').forEach(b=>b.classList.remove('active'));
+
+document.querySelectorAll('.tab_btn').forEach(b=>{
+b.classList.remove('active');
+b.setAttribute('aria-selected','false');
+});
+
 btn.classList.add('active');
+btn.setAttribute('aria-selected','true');
+
 loadProducts(btn.dataset.category);
+
 }
 
 });
 
-loadProducts('wordpress');// JavaScript Document
+loadProducts('wordpress');
+
+});
