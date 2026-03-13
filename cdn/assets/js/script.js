@@ -1,6 +1,7 @@
 async function loadProducts(category){
 
-const feed = await fetch('/feeds/posts/default?alt=json');
+const feed = await fetch('/feeds/posts/default?alt=json&max-results=50');
+
 const data = await feed.json();
 
 const container = document.getElementById('product-list');
