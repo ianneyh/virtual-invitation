@@ -1,47 +1,45 @@
 document.addEventListener("DOMContentLoaded", function(){
 
-async function loadProducts(){
+/* function load kategori */
 
-const res = await fetch('/feeds/posts/default?alt=json&max-results=50');
+async function loadCategory(category){
+
+const url = `/feeds/posts/default/-/${category}?alt=json&max-results=10`;
+
+try{
+
+const res = await fetch(url);
 const data = await res.json();
 
-const container = document.querySelector('#product-list');
+const ul = document.getElementById(category);
 
-container.innerHTML = "";
+if(!ul) return;
+
+ul.innerHTML = "";
 
 let i = 1;
 
 data.feed.entry.forEach(post=>{
 
-/* parsing html post */
-
 const parser = new DOMParser();
 const html = parser.parseFromString(post.content.$t,'text/html');
 
 const json = html.querySelector('.product-json');
-
 if(!json) return;
-
-/* convert json */
 
 const product = JSON.parse(json.textContent);
 
-
-/* ambil data */
-
 const title = product.title;
 const image = product.image;
-const category = product.category;
 const author = product.author;
 const rating = product.rating;
 const reviews = product.reviews;
 const demo = product.demo;
 const price = product.price;
 
+/* render */
 
-/* render html */
-
-container.innerHTML += `
+ul.innerHTML += `
 
 <li class="item animate animate_top" style="--i:${i++}">
 
@@ -107,8 +105,23 @@ ${author}
 
 });
 
+}catch(err){
+
+console.error("Error load category:",category,err);
+
 }
 
-loadProducts();
+}
+
+
+/* auto load semua kategori */
+
+document.querySelectorAll(".tab_list ul").forEach(ul=>{
+
+const category = ul.id;
+
+loadCategory(category);
+
+});
 
 });
