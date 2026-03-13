@@ -13,18 +13,33 @@ let i = 1;
 
 data.feed.entry.forEach(post=>{
 
-const title = post.title.$t;
+/* parsing html post */
 
-const link = post.link.find(l => l.rel === "alternate").href;
+const parser = new DOMParser();
+const html = parser.parseFromString(post.content.$t,'text/html');
 
-const image = post.media$thumbnail ?
-post.media$thumbnail.url.replace('s72-c','s600') :
-"https://via.placeholder.com/600";
+const json = html.querySelector('.product-json');
 
-  alert(image);
-const category = post.category ? post.category[0].term : "General";
+if(!json) return;
 
-const author = post.author[0].name.$t;
+/* convert json */
+
+const product = JSON.parse(json.textContent);
+
+
+/* ambil data */
+
+const title = product.title;
+const image = product.image;
+const category = product.category;
+const author = product.author;
+const rating = product.rating;
+const reviews = product.reviews;
+const demo = product.demo;
+const price = product.price;
+
+
+/* render html */
 
 container.innerHTML += `
 
@@ -38,8 +53,8 @@ container.innerHTML += `
 <span class="blind">button add to wishlist</span>
 </button>
 
-<a class="service_thumb" href="${link}">
-<img class="w-full" src="${image}" alt="${title}">
+<a class="service_thumb" href="${demo}">
+<img alt="${title}" class="w-full" src="${image}">
 </a>
 
 <div class="service_info py-5 px-4">
@@ -52,13 +67,13 @@ ${category}
 
 <div class="rate flex items-center gap-1">
 <span class="ph-fill ph-star text-yellow text-xs"></span>
-<strong class="service_rate text-button-sm">5.0</strong>
-<span class="service_rate_quantity caption1 text-secondary">(1)</span>
+<strong class="service_rate text-button-sm">${rating}</strong>
+<span class="service_rate_quantity caption1 text-secondary">(${reviews})</span>
 </div>
 
 </div>
 
-<a class="service_title text-title pt-2 duration-300 hover:text-primary" href="${link}">
+<a class="service_title text-title pt-2 duration-300 hover:text-primary" href="${demo}">
 ${title}
 </a>
 
@@ -77,7 +92,7 @@ ${author}
 
 <div class="service_price whitespace-nowrap">
 <span class="text-secondary">From </span>
-<span class="price text-title">$75</span>
+<span class="price text-title">$${price}</span>
 </div>
 
 </div>
