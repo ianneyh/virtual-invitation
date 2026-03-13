@@ -128,7 +128,7 @@ loadCategory(category);
 
 
 document.addEventListener("DOMContentLoaded", function(){
-
+const postUrl = post.link.find(l => l.rel === "alternate").href;
 const maxResults = 8;
 
 /* ambil label dari URL */
@@ -190,7 +190,7 @@ container.innerHTML += `
 <span class="ph-fill ph-heart text-xl"></span>
 </button>
 
-<a class="service_thumb" href="${product.demo}">
+<a class="service_thumb" href="${postUrl}">
 <img class="w-full" src="${product.image}" alt="${product.title}">
 </a>
 
