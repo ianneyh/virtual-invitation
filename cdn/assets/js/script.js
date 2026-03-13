@@ -1,60 +1,74 @@
-async function loadProducts(category){
+async function loadProducts(category, containerId){
 
-const feed = await fetch('/feeds/posts/default?alt=json');
-const data = await feed.json();
+const url = "/feeds/posts/default?alt=json&max-results=20";
 
-const container = document.getElementById('product-list');
-container.innerHTML='';
+const res = await fetch(url);
+const data = await res.json();
 
-data.feed.entry.forEach(post=>{
+const posts = data.feed.entry || [];
 
-const parser = new DOMParser();
-const html = parser.parseFromString(post.content.$t,'text/html');
+let html = "";
 
-const json = html.querySelector('.product-json');
+posts.forEach(post => {
 
-if(!json) return;
+if(!post.category) return;
 
-const product = JSON.parse(json.textContent);
+const labels = post.category.map(c => c.term);
 
-if(product.category !== category) return;
+if(!labels.includes(category)) return;
 
-container.innerHTML += `
-<div class="service_item bg-white shadow-md rounded-lg">
+const title = post.title.$t;
 
-<img src="${product.image}" class="w-full">
+const link = post.link.find(l => l.rel == "alternate").href;
 
-<div class="service_info py-5 px-4">
+let image = "";
+try{
+image = post.media$thumbnail.url.replace("/s72-c","/s500");
+}catch(e){
+image = "https://via.placeholder.com/500";
+}
 
-<div class="flex items-center justify-between">
-<span class="tag">${product.category}</span>
-<div class="rate">⭐ ${product.rating} (${product.reviews})</div>
+html += `
+<li class='item animate animate_top'>
+<div class='service_item overflow-hidden relative rounded-lg bg-white shadow-md duration-300 hover:shadow-xl'>
+
+<a class='service_thumb' href='${link}'>
+<img class='w-full' src='${image}' alt='${title}'>
+</a>
+
+<div class='service_info py-5 px-4'>
+
+<a class='service_title text-title pt-2 duration-300 hover:text-primary' href='${link}'>
+${title}
+</a>
+
 </div>
 
-<a class="service_title">${product.title}</a>
-
-<div class="service_more_info flex justify-between mt-4">
-<span>${product.author}</span>
-<span class="price">$${product.price}</span>
 </div>
-
-</div>
-
-</div>
+</li>
 `;
 
 });
 
+document.querySelector(containerId).innerHTML = html;
+
 }
 
-document.querySelectorAll('.tab_btn').forEach(btn=>{
 
-btn.onclick = ()=>{
-document.querySelectorAll('.tab_btn').forEach(b=>b.classList.remove('active'));
-btn.classList.add('active');
-loadProducts(btn.dataset.category);
-}
+// klik tab
+document.querySelectorAll(".tab_btn").forEach(btn=>{
+
+btn.addEventListener("click",function(){
+
+const category = this.dataset.category;
+const panel = this.getAttribute("aria-controls");
+
+loadProducts(category,"#"+panel+" ul");
 
 });
 
-loadProducts('wordpress');
+});
+
+
+// load pertama
+loadProducts("html","#services_01 ul");
