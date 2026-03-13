@@ -1,26 +1,33 @@
-async function loadProducts(category){
+document.addEventListener("DOMContentLoaded", function(){
 
-const feed = await fetch('/feeds/posts/default?alt=json');
-const data = await feed.json();
+async function loadProducts(){
 
-const container = document.getElementById('product-list');
-container.innerHTML='';
+const res = await fetch('/feeds/posts/default?alt=json&max-results=50');
+const data = await res.json();
+
+const container = document.querySelector('#product-list');
+
+container.innerHTML = "";
+
+let i = 1;
 
 data.feed.entry.forEach(post=>{
 
-const parser = new DOMParser();
-const html = parser.parseFromString(post.content.$t,'text/html');
+const title = post.title.$t;
 
-const json = html.querySelector('.product-json');
+const link = post.link.find(l => l.rel === "alternate").href;
 
-if(!json) return;
+const image = post.media$thumbnail ?
+post.media$thumbnail.url.replace('s72-c','s600') :
+"https://via.placeholder.com/600";
 
-const product = JSON.parse(json.textContent);
+const category = post.category ? post.category[0].term : "General";
 
-if(product.category !== category) return;
+const author = post.author[0].name.$t;
 
 container.innerHTML += `
-<li class="item animate animate_top" style="--i:1">
+
+<li class="item animate animate_top" style="--i:${i++}">
 
 <div class="service_item overflow-hidden relative rounded-lg bg-white shadow-md duration-300 hover:shadow-xl">
 
@@ -30,8 +37,8 @@ container.innerHTML += `
 <span class="blind">button add to wishlist</span>
 </button>
 
-<a class="service_thumb" href="${product.demo}">
-<img alt="${product.title}" class="w-full" src="${product.image}">
+<a class="service_thumb" href="${link}">
+<img class="w-full" src="${image}" alt="${title}">
 </a>
 
 <div class="service_info py-5 px-4">
@@ -39,19 +46,19 @@ container.innerHTML += `
 <div class="flex items-center justify-between">
 
 <a class="tag caption2 bg-surface hover:bg-primary hover:text-white">
-${product.category}
+${category}
 </a>
 
 <div class="rate flex items-center gap-1">
 <span class="ph-fill ph-star text-yellow text-xs"></span>
-<strong class="service_rate text-button-sm">${product.rating}</strong>
-<span class="service_rate_quantity caption1 text-secondary">(${product.reviews})</span>
+<strong class="service_rate text-button-sm">5.0</strong>
+<span class="service_rate_quantity caption1 text-secondary">(1)</span>
 </div>
 
 </div>
 
-<a class="service_title text-title pt-2 duration-300 hover:text-primary" href="${product.demo}">
-${product.title}
+<a class="service_title text-title pt-2 duration-300 hover:text-primary" href="${link}">
+${title}
 </a>
 
 <div class="service_more_info flex items-center justify-between gap-1 mt-4 pt-4 border-t border-line">
@@ -59,38 +66,33 @@ ${product.title}
 <a class="service_author flex items-center gap-2">
 
 <img class="service_author_avatar w-8 h-8 rounded-full"
-src="https://ui-avatars.com/api/?name=${encodeURIComponent(product.author)}">
+src="https://ui-avatars.com/api/?name=${encodeURIComponent(author)}">
 
 <span class="service_author_name -style-1">
-${product.author}
+${author}
 </span>
 
 </a>
 
 <div class="service_price whitespace-nowrap">
 <span class="text-secondary">From </span>
-<span class="price text-title">$${product.price}</span>
+<span class="price text-title">$75</span>
 </div>
 
 </div>
+
 </div>
+
 </div>
 
 </li>
+
 `;
 
 });
 
 }
 
-document.querySelectorAll('.tab_btn').forEach(btn=>{
-
-btn.onclick = ()=>{
-document.querySelectorAll('.tab_btn').forEach(b=>b.classList.remove('active'));
-btn.classList.add('active');
-loadProducts(btn.dataset.category);
-}
+loadProducts();
 
 });
-
-loadProducts('wordpress');
