@@ -21,6 +21,7 @@ const image = post.media$thumbnail ?
 post.media$thumbnail.url.replace('s72-c','s600') :
 "https://via.placeholder.com/600";
 
+  alert(image);
 const category = post.category ? post.category[0].term : "General";
 
 const author = post.author[0].name.$t;
