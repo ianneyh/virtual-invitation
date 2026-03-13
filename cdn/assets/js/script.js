@@ -1,7 +1,6 @@
 async function loadProducts(category){
 
-const feed = await fetch('/feeds/posts/default?alt=json&max-results=50');
-
+const feed = await fetch('/feeds/posts/default?alt=json');
 const data = await feed.json();
 
 const container = document.getElementById('product-list');
@@ -82,3 +81,15 @@ ${product.author}
 });
 
 }
+
+document.querySelectorAll('.tab_btn').forEach(btn=>{
+
+btn.onclick = ()=>{
+document.querySelectorAll('.tab_btn').forEach(b=>b.classList.remove('active'));
+btn.classList.add('active');
+loadProducts(btn.dataset.category);
+}
+
+});
+
+loadProducts('wordpress');// JavaScript Document
