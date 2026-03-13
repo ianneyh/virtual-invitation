@@ -1,46 +1,45 @@
-async function loadProducts(category, panelId){
+const BLOG_URL = location.origin
 
-const url = "/feeds/posts/default?alt=json&max-results=20";
+async function loadProducts(category){
 
-try{
+const url = BLOG_URL + "/feeds/posts/default?alt=json&max-results=20"
 
-const response = await fetch(url);
-const data = await response.json();
+const res = await fetch(url)
+const data = await res.json()
 
-const posts = data.feed.entry || [];
+const posts = data.feed.entry || []
 
-const list = document.querySelector("#"+panelId+" ul");
+const list = document.querySelector('[data-list="'+category+'"]')
 
-if(!list) return;
+if(!list) return
 
-let html = "";
+let html = ""
 
 posts.forEach(post=>{
 
-if(!post.category) return;
+if(!post.category) return
 
-const labels = post.category.map(c=>c.term);
+const labels = post.category.map(c=>c.term)
 
-if(!labels.includes(category)) return;
+if(!labels.includes(category)) return
 
-const title = post.title.$t;
+const title = post.title.$t
 
-const link = post.link.find(l=>l.rel==="alternate").href;
+const link = post.link.find(l=>l.rel=="alternate").href
 
-let image = "";
+let img="https://via.placeholder.com/500"
 
 if(post.media$thumbnail){
-image = post.media$thumbnail.url.replace("s72-c","s500");
-}else{
-image = "https://via.placeholder.com/500";
+img = post.media$thumbnail.url.replace("s72-c","s500")
 }
 
 html += `
 <li class='item animate animate_top'>
+
 <div class='service_item overflow-hidden relative rounded-lg bg-white shadow-md duration-300 hover:shadow-xl'>
 
 <a class='service_thumb' href='${link}'>
-<img class='w-full' src='${image}' alt='${title}'>
+<img class='w-full' src='${img}' alt='${title}'>
 </a>
 
 <div class='service_info py-5 px-4'>
@@ -53,62 +52,46 @@ html += `
 ${title}
 </a>
 
-<div class='service_more_info flex items-center justify-between gap-1 mt-4 pt-4 border-t border-line'>
-<span class='service_author_name'>Digital Asset</span>
-
-<div class='service_price whitespace-nowrap'>
-<span class='price text-title'>View</span>
 </div>
 
 </div>
 
-</div>
-</div>
 </li>
-`;
+`
 
-});
+})
 
-list.innerHTML = html;
-
-}catch(e){
-
-console.log("Error loading products",e);
-
-}
+list.innerHTML = html || "<p>No products</p>"
 
 }
 
 
-// event klik tab
+// TAB CLICK
 document.querySelectorAll(".tab_btn").forEach(btn=>{
 
 btn.addEventListener("click",function(){
 
-const category = this.dataset.category;
+document.querySelectorAll(".tab_btn").forEach(b=>b.classList.remove("active"))
+this.classList.add("active")
 
-const panel = this.getAttribute("aria-controls");
+const panel = this.getAttribute("aria-controls")
 
-loadProducts(category,panel);
+document.querySelectorAll(".tab_list").forEach(p=>p.classList.remove("active"))
 
-});
+document.getElementById(panel).classList.add("active")
 
-});
+const category = this.dataset.category
+
+loadProducts(category)
+
+})
+
+})
 
 
-// load awal
-document.addEventListener("DOMContentLoaded",function(){
+// FIRST LOAD
+document.addEventListener("DOMContentLoaded",()=>{
 
-const firstTab = document.querySelector(".tab_btn.active");
+loadProducts("graphic")
 
-if(firstTab){
-
-const category = firstTab.dataset.category;
-const panel = firstTab.getAttribute("aria-controls");
-
-loadProducts(category,panel);
-
-}
-
-});
-
+})
