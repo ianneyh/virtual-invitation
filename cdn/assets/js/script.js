@@ -1,1 +1,60 @@
+async function loadProducts(category){
 
+const feed = await fetch('/feeds/posts/default?alt=json');
+const data = await feed.json();
+
+const container = document.getElementById('product-list');
+container.innerHTML='';
+
+data.feed.entry.forEach(post=>{
+
+const parser = new DOMParser();
+const html = parser.parseFromString(post.content.$t,'text/html');
+
+const json = html.querySelector('.product-json');
+
+if(!json) return;
+
+const product = JSON.parse(json.textContent);
+
+if(product.category !== category) return;
+
+container.innerHTML += `
+<div class="service_item bg-white shadow-md rounded-lg">
+
+<img src="${product.image}" class="w-full">
+
+<div class="service_info py-5 px-4">
+
+<div class="flex items-center justify-between">
+<span class="tag">${product.category}</span>
+<div class="rate">⭐ ${product.rating} (${product.reviews})</div>
+</div>
+
+<a class="service_title">${product.title}</a>
+
+<div class="service_more_info flex justify-between mt-4">
+<span>${product.author}</span>
+<span class="price">$${product.price}</span>
+</div>
+
+</div>
+
+</div>
+`;
+
+});
+
+}
+
+document.querySelectorAll('.tab_btn').forEach(btn=>{
+
+btn.onclick = ()=>{
+document.querySelectorAll('.tab_btn').forEach(b=>b.classList.remove('active'));
+btn.classList.add('active');
+loadProducts(btn.dataset.category);
+}
+
+});
+
+loadProducts('wordpress');
