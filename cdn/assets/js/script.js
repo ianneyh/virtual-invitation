@@ -213,7 +213,7 @@ ${product.category}
 </div>
 
 <a class="service_title text-title pt-2 duration-300 hover:text-primary"
-href="${product.demo}">
+href="${postUrl}">
 ${product.title}
 </a>
 
