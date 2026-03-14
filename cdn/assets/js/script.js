@@ -349,5 +349,5 @@ ratingElement.innerHTML = `
 
 /* halaman detail post -------------------*/
 
-alert('c');
+alert('f');
 
