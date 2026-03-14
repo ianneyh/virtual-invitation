@@ -128,7 +128,7 @@ loadCategory(category);
 
 
 document.addEventListener("DOMContentLoaded", function(){
-const postUrl = post.link.find(l => l.rel === "alternate").href;
+
 const maxResults = 8;
 
 /* ambil label dari URL */
@@ -178,7 +178,7 @@ const json = html.querySelector(".product-json");
 if(!json) return;
 
 const product = JSON.parse(json.textContent);
-
+const postUrl = post.link.find(l => l.rel === "alternate").href;
 container.innerHTML += `
 
 <li class="item h-full">
@@ -299,5 +299,5 @@ loadProducts(1);
 
 });
 
-alert('b');
+alert('c');
 
