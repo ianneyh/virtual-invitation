@@ -366,5 +366,5 @@ console.error("Detail post error:",err);
 
 /* halaman detail post -------------------*/
 
-alert('g');
+alert('h');
 
