@@ -313,23 +313,23 @@ document.addEventListener("DOMContentLoaded", async function(){
 
 try{
 
-/* ambil path url */
+/* ambil path post */
 const path = window.location.pathname.replace(".html","");
 
-/* buat url feed */
+/* url feed detail */
 const url = `/feeds/posts/default${path}?alt=json`;
 
-/* fetch data */
+/* fetch */
 const res = await fetch(url);
 const data = await res.json();
 
 const post = data.entry;
 
-/* parse html body post */
+/* parse html body */
 const parser = new DOMParser();
 const html = parser.parseFromString(post.content.$t,"text/html");
 
-/* ambil json product */
+/* ambil json */
 const json = html.querySelector(".product-json");
 
 if(!json){
@@ -338,9 +338,9 @@ return;
 }
 
 /* parse json */
-const product = JSON.parse(json.textContent.trim());
+const product = JSON.parse(json.textContent);
 
-/* render data */
+/* render */
 
 document.querySelector("#product_title").innerText = product.title;
 
@@ -348,13 +348,17 @@ document.querySelector("#product_image").src = product.image;
 
 document.querySelector("#product_author").innerText = product.author;
 
+document.querySelector("#product_category").innerText = product.category;
+
 document.querySelector("#product_rating").innerText = product.rating;
 
 document.querySelector("#product_reviews").innerText = product.reviews;
 
 document.querySelector("#product_price").innerText = "$"+product.price;
 
-document.querySelector("#product_description").innerHTML = product.description;
+document.querySelector("#product_demo").href = product.demo;
+
+document.querySelector("#product_download").href = product.download;
 
 }catch(err){
 
@@ -366,5 +370,5 @@ console.error("Detail post error:",err);
 
 /* halaman detail post -------------------*/
 
-alert('h');
+alert('i');
 
