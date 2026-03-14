@@ -356,5 +356,5 @@ console.error("Detail post error:",err);
 
 /* halaman detail post -------------------*/
 
-alert('j');
+alert('jkl');
 
