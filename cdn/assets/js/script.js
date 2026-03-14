@@ -313,56 +313,42 @@ document.addEventListener("DOMContentLoaded", async function(){
 
 try{
 
-/* ambil path post */
-const path = window.location.pathname.replace(".html","");
+const slug = window.location.pathname.split("/").pop();
 
-/* url feed detail */
-const url = `/feeds/posts/default${path}?alt=json`;
-
-/* fetch */
-const res = await fetch(url);
+const res = await fetch("/feeds/posts/default?alt=json&max-results=50");
 const data = await res.json();
 
-const post = data.entry;
+let post = null;
 
-/* parse html body */
-const parser = new DOMParser();
-const html = parser.parseFromString(post.content.$t,"text/html");
+data.feed.entry.forEach(p=>{
 
-/* ambil json */
-const json = html.querySelector(".product-json");
+const url = p.link.find(l=>l.rel==="alternate").href;
 
-if(!json){
-console.error("product-json tidak ditemukan");
+if(url.includes(slug)){
+post = p;
+}
+
+});
+
+if(!post){
+console.error("Post tidak ditemukan");
 return;
 }
 
-/* parse json */
+const parser = new DOMParser();
+const html = parser.parseFromString(post.content.$t,"text/html");
+
+const json = html.querySelector(".product-json");
+
 const product = JSON.parse(json.textContent);
 
 /* render */
-
+alert(product.title);
 document.querySelector("#product_title").innerText = product.title;
-
-document.querySelector("#product_image").src = product.image;
-
-document.querySelector("#product_author").innerText = product.author;
-
-document.querySelector("#product_category").innerText = product.category;
-
-document.querySelector("#product_rating").innerText = product.rating;
-
-document.querySelector("#product_reviews").innerText = product.reviews;
-
-document.querySelector("#product_price").innerText = "$"+product.price;
-
-document.querySelector("#product_demo").href = product.demo;
-
-document.querySelector("#product_download").href = product.download;
 
 }catch(err){
 
-console.error("Detail post error:",err);
+console.error(err);
 
 }
 
@@ -370,5 +356,5 @@ console.error("Detail post error:",err);
 
 /* halaman detail post -------------------*/
 
-alert('i');
+alert('j');
 
