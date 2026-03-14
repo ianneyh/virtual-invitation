@@ -311,30 +311,56 @@ loadProducts(1);
 
 document.addEventListener("DOMContentLoaded", async function(){
 
-const path = window.location.pathname;
-const slug = path.replace(".html","");
+try{
 
-const url = `/feeds/posts/default${slug}?alt=json`;
+/* ambil path url */
+const path = window.location.pathname.replace(".html","");
 
+/* buat url feed */
+const url = `/feeds/posts/default${path}?alt=json`;
+
+/* fetch data */
 const res = await fetch(url);
 const data = await res.json();
 
 const post = data.entry;
 
+/* parse html body post */
 const parser = new DOMParser();
 const html = parser.parseFromString(post.content.$t,"text/html");
 
+/* ambil json product */
 const json = html.querySelector(".product-json");
 
-if(!json) return;
+if(!json){
+console.error("product-json tidak ditemukan");
+return;
+}
 
-const product = JSON.parse(json.textContent);
+/* parse json */
+const product = JSON.parse(json.textContent.trim());
 
-alert(product.title);
-  
-document.querySelector("#product_title").innerText = 'aaaaa';
+/* render data */
 
+document.querySelector("#product_title").innerText = product.title;
 
+document.querySelector("#product_image").src = product.image;
+
+document.querySelector("#product_author").innerText = product.author;
+
+document.querySelector("#product_rating").innerText = product.rating;
+
+document.querySelector("#product_reviews").innerText = product.reviews;
+
+document.querySelector("#product_price").innerText = "$"+product.price;
+
+document.querySelector("#product_description").innerHTML = product.description;
+
+}catch(err){
+
+console.error("Detail post error:",err);
+
+}
 
 });
 
