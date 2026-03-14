@@ -1,3 +1,4 @@
+/* halaman homepage -------------------*/
 document.addEventListener("DOMContentLoaded", function(){
 
 /* function load kategori */
@@ -126,6 +127,10 @@ loadCategory(category);
 
 });
 
+/* halaman homepage -------------------*/
+
+
+/* halaman multiple list -------------------*/
 
 document.addEventListener("DOMContentLoaded", function(){
 
@@ -298,6 +303,51 @@ loadProducts(page);
 loadProducts(1);
 
 });
+
+/* halaman multiple list ------------------- */
+
+
+/* halaman detail post -------------------*/
+
+document.addEventListener("DOMContentLoaded", function(){
+
+/* ambil JSON produk dari post */
+
+const json = document.querySelector(".product-json");
+
+if(!json) return;
+
+const product = JSON.parse(json.textContent);
+
+/* isi title */
+
+const titleElement = document.getElementById("product-title");
+
+if(titleElement){
+titleElement.textContent = product.title;
+}
+
+/* isi rating */
+
+const ratingElement = document.getElementById("product-rating");
+
+if(ratingElement){
+
+ratingElement.innerHTML = `
+
+<p>⭐ Rating: <strong>${product.rating}</strong></p>
+
+<p>Total Reviews: <strong>${product.reviews}</strong></p>
+
+<p>Author: <strong>${product.author}</strong></p>
+
+`;
+
+}
+
+});
+
+/* halaman detail post -------------------*/
 
 alert('c');
 
