@@ -332,7 +332,7 @@ const product = JSON.parse(json.textContent);
 
 alert(product.title);
   
-document.querySelector("#product_title").innerText = product.title;
+document.querySelector("#product_title").innerText = 'aaaaa';
 
 
 
