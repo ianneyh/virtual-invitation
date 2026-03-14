@@ -309,45 +309,34 @@ loadProducts(1);
 
 /* halaman detail post -------------------*/
 
-document.addEventListener("DOMContentLoaded", function(){
+document.addEventListener("DOMContentLoaded", async function(){
 
-/* ambil JSON produk dari post */
+const path = window.location.pathname;
+const slug = path.replace(".html","");
 
-const json = document.querySelector(".product-json");
+const url = `/feeds/posts/default${slug}?alt=json`;
+
+const res = await fetch(url);
+const data = await res.json();
+
+const post = data.entry;
+
+const parser = new DOMParser();
+const html = parser.parseFromString(post.content.$t,"text/html");
+
+const json = html.querySelector(".product-json");
 
 if(!json) return;
 
 const product = JSON.parse(json.textContent);
 
-/* isi title */
+document.querySelector("#product_title").innerText = product.title;
 
-const titleElement = document.getElementById("product-title");
 
-if(titleElement){
-titleElement.textContent = product.title;
-}
-
-/* isi rating */
-
-const ratingElement = document.getElementById("product-rating");
-
-if(ratingElement){
-
-ratingElement.innerHTML = `
-
-<p>⭐ Rating: <strong>${product.rating}</strong></p>
-
-<p>Total Reviews: <strong>${product.reviews}</strong></p>
-
-<p>Author: <strong>${product.author}</strong></p>
-
-`;
-
-}
 
 });
 
 /* halaman detail post -------------------*/
 
-alert('f');
+alert('g');
 
