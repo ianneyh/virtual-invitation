@@ -313,46 +313,46 @@ document.addEventListener("DOMContentLoaded", async function(){
 
 try{
 
-const slug = window.location.pathname.split("/").pop();
+/* ambil path url post */
+const path = window.location.pathname;
 
-const res = await fetch("/feeds/posts/default?alt=json&max-results=50");
+/* buat url feed */
+const url = `/feeds/posts/default?alt=json&path=${path}`;
+
+/* fetch */
+const res = await fetch(url);
 const data = await res.json();
 
-let post = null;
+/* ambil post */
+const post = data.feed.entry[0];
 
-data.feed.entry.forEach(p=>{
-
-const url = p.link.find(l=>l.rel==="alternate").href;
-
-if(url.includes(slug)){
-post = p;
-}
-
-});
-
-if(!post){
-console.error("Post tidak ditemukan");
-return;
-}
-
+/* parse body html */
 const parser = new DOMParser();
 const html = parser.parseFromString(post.content.$t,"text/html");
 
+/* ambil json product */
 const json = html.querySelector(".product-json");
 
-const product = JSON.parse(json.textContent);
+if(!json){
+console.error("product-json tidak ditemukan");
+return;
+}
 
-/* render */
-alert(product.title);
+/* parse json */
+const product = JSON.parse(json.textContent);
 document.querySelector("#product_title").innerText = product.title;
+/* render data */
+
+
 
 }catch(err){
 
-console.error(err);
+console.error("Detail post error:",err);
 
 }
 
 });
+
 
 /* halaman detail post -------------------*/
 
